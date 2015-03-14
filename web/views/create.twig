@@ -1,3 +1,22 @@
 {% extends "base.twig" %}
 
 {% block title %}Create a poll{% endblock %}
+
+{% block body %}
+
+<div id="create-poll-page">
+
+	<h1>Create your poll</h1>
+
+	<form>
+		<input type='text' placeholder="Add your question here">
+
+		<p>Add your options</p>
+		<input type='text' placeholder="Option 1">
+
+		<button type="submit">Start</button>
+	</form>
+
+</div>
+
+{% endblock %}
