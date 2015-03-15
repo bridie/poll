@@ -23,7 +23,9 @@ body {
     padding: 5px 10px; }
   #create-poll-page form .option-input {
     width: 250px;
-    font-size: 16px; }
+    font-size: 16px;
+    display: block;
+    margin: 10px auto; }
   #create-poll-page form .options-text {
     font-size: 26px;
     color: #7B7B7B; }

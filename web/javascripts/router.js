@@ -1,11 +1,16 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function($, _, Backbone){
+  'backbone',
+  'views/create-page'
+], function($, _, Backbone, CreatePage){
   var AppRouter = Backbone.Router.extend({
     routes: {
+      '': 'createPage'
+    },
 
+    createPage: function() {
+      var createPage = new CreatePage({ el: '#create-poll-page' });
     }
   });
 
