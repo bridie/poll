@@ -6,7 +6,8 @@ define([
 ], function($, _, Backbone){
   var createPageView = Backbone.View.extend({
       events: {
-        'keyup .last-option': 'addOptionInput'
+        'keyup .last-option': 'addOptionInput',
+        'focusout .option-input': 'manageOptionInputs'
       },
 
       addOptionInput: function(e) {
@@ -20,6 +21,20 @@ define([
       getNextOptionInputPlaceholder: function(currentOption) {
         var currentOptionNumber = currentOption.attr('placeholder').substring(currentOption.attr('placeholder').length - 1);
         return 'Option ' + (parseInt(currentOptionNumber) + 1);
+      },
+
+      manageOptionInputs: function() {
+        $('.option-input').not('.last-option').each(function() {
+          if ($(this).val() == '') {
+            $(this).remove();
+
+            var i = 1;
+            $('.option-input').each(function() {
+              $(this).attr('placeholder', 'Option ' + i);
+              i++;
+            });
+          }
+        });
       }
 
   });
