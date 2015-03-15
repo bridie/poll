@@ -10,10 +10,18 @@ define([
       },
 
       addOptionInput: function(e) {
-        var optionInputClone = $('.last-option').clone().val('');
-        $(e.currentTarget).after(optionInputClone);
-        $(e.currentTarget).removeClass('last-option');
+        var target = $(e.currentTarget);
+        var placeholder = this.getNextOptionInputPlaceholder(target);
+        var newOptionInput = $('.last-option').clone().val('').attr('placeholder', placeholder);
+        target.after(newOptionInput);
+        target.removeClass('last-option');
+      },
+
+      getNextOptionInputPlaceholder: function(currentOption) {
+        var currentOptionNumber = currentOption.attr('placeholder').substring(currentOption.attr('placeholder').length - 1);
+        return 'Option ' + (parseInt(currentOptionNumber) + 1);
       }
+
   });
 
   return createPageView;
