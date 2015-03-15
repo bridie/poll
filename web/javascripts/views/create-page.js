@@ -7,7 +7,7 @@ define([
   var createPageView = Backbone.View.extend({
       events: {
         'keyup .last-option': 'addOptionInput',
-        'keyup .option-input': 'checkSubmitAvailability',
+        'keyup input': 'checkSubmitAvailability',
         'focusout .option-input': 'manageOptionInputs'
       },
 
