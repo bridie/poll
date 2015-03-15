@@ -24,16 +24,21 @@ define([
       },
 
       manageOptionInputs: function() {
+        var self = this;
         $('.option-input').not('.last-option').each(function() {
           if ($(this).val() == '') {
             $(this).remove();
 
-            var i = 1;
-            $('.option-input').each(function() {
-              $(this).attr('placeholder', 'Option ' + i);
-              i++;
-            });
+            this.resetOptionInputPlaceholderText();
           }
+        });
+      },
+
+      resetOptionInputPlaceholderText: function() {
+        var i = 1;
+        $('.option-input').each(function() {
+          $(this).attr('placeholder', 'Option ' + i);
+          i++;
         });
       }
 
