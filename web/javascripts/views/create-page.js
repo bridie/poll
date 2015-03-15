@@ -7,6 +7,7 @@ define([
   var createPageView = Backbone.View.extend({
       events: {
         'keyup .last-option': 'addOptionInput',
+        'keyup .option-input': 'checkSubmitAvailability',
         'focusout .option-input': 'manageOptionInputs'
       },
 
@@ -16,6 +17,20 @@ define([
         var newOptionInput = $('.last-option').clone().val('').attr('placeholder', placeholder);
         target.after(newOptionInput);
         target.removeClass('last-option');
+      },
+
+      checkSubmitAvailability: function() {
+        var questionExists = $('.question-input').val() != '';
+        var optionsExist = 0;
+        $('.option-input').each(function() {
+          if ($(this).val() != '') {
+            optionsExist++;
+          }
+        });
+
+        if (questionExists && optionsExist >= 2) {
+          $('button').css('background', '#E45857').attr('disabled', false);
+        }
       },
 
       getNextOptionInputPlaceholder: function(currentOption) {
