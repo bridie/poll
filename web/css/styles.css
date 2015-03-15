@@ -10,6 +10,7 @@ body {
 #create-poll-page form {
   text-align: center; }
   #create-poll-page form input {
+    color: #555555;
     text-align: center;
     border-radius: 3px;
     border: 1px solid #bdc3c7; }
