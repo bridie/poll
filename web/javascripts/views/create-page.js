@@ -30,6 +30,8 @@ define([
 
         if (questionExists && optionsExist >= 2) {
           $('button').css('background', '#E45857').attr('disabled', false);
+        } else {
+          $('button').css('background', '#7B7B7B').attr('disabled', true);
         }
       },
 
@@ -44,7 +46,7 @@ define([
           if ($(this).val() == '') {
             $(this).remove();
 
-            this.resetOptionInputPlaceholderText();
+            self.resetOptionInputPlaceholderText();
           }
         });
       },
