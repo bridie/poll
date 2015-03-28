@@ -8,11 +8,11 @@
 
 	<h1>Create your poll</h1>
 
-	<form>
-		<input class='question-input' type='text' placeholder="Add your question here">
+	<form method="post" action="/create">
+		<input name="question" class='question-input' type='text' placeholder="Add your question here">
 
 		<p class='options-text'>Add your options</p>
-		<input class='option-input last-option' type='text' placeholder="Option 1">
+		<input name="options[]" class='option-input last-option' type='text' placeholder="Option 1">
 
 		<button type="submit" disabled>Start</button>
 	</form>
