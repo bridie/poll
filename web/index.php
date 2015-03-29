@@ -5,7 +5,7 @@ $loader->add('App', '..');
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use App\Question;
+use App\Poll;
 
 $app = new Silex\Application();
 $app['debug'] = true;
@@ -31,14 +31,13 @@ $app->get('/', function () use ($app) {
 });
 
 $app->post('/create', function (Request $request) use ($app) {
-	$questionValue = $request->get('question');
+	$question = $request->get('question');
 	$options = $request->get('options');
 	// Remove the last element of the options array as it will always be blank.
 	array_pop($options);
 
-	$question = new Question($app['db']);
-	$question->create($questionValue);
-	// @todo, need to add the options into the database.
+	$poll = new Poll($question, $options, $app['db']);
+    $poll->create();
 
 	return $app->redirect('/');
 });

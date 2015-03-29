@@ -11,8 +11,9 @@ class Question
 	private $urlComponent;
 	private $database;
 
-	public function __construct($database)
+	public function __construct($question, $database)
 	{
+		$this->question = $question;
 		$this->database = $database;
 	}
 
@@ -31,22 +32,18 @@ class Question
 		return $this->urlComponent;
 	}
 
-	public function create($question)
+	public function create()
 	{
 		$urlComponent = self::createUrlComponent();
 		$insertSql = 'INSERT INTO questions (question_value, url_component) VALUES (?, ?)';
-		$insert = $this->database->executeUpdate($insertSql, array($question, $urlComponent));
+		$insert = $this->database->executeUpdate($insertSql, array($this->question, $urlComponent));
 
 		if ($insert) {
-			$selectSql = 'SELECT * FROM questions WHERE url_component = ?';
-			$question = $this->database->fetchAssoc($selectSql, array($urlComponent));
-
-			$this->id = $question['id'];
-			$this->question = $question['question_value'];
-			$this->urlComponent = $question['url_component'];
-		} else {
-			return false;
+			$this->id = $this->database->lastInsertId();
+			$this->urlComponent = $urlComponent;
 		}
+
+		return $insert;
 	}
 
 	private function createUrlComponent()
