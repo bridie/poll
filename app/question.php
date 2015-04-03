@@ -11,8 +11,9 @@ class Question
 	private $urlComponent;
 	private $database;
 
-	public function __construct($question, $database)
+	public function __construct($question)
 	{
+		global $database;
 		$this->question = $question;
 		$this->database = $database;
 	}
@@ -58,5 +59,18 @@ class Question
 		} else {
 			$this->createUrlComponent();
 		}
+	}
+
+	public static function getQuestionFromUrlComponent($urlComponent)
+	{
+		global $database;
+		$sql = 'SELECT * FROM questions WHERE url_component = ?';
+		$questionData = $database->fetchAssoc($sql, array($urlComponent));
+
+		$question = new Static($questionData['question_value']);
+		$question->id = $questionData['id'];
+		$question->urlComponent = $questionData['url_component'];
+
+		return $question;
 	}
 }

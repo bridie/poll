@@ -24,6 +24,7 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
         'password' => ''
     ),
 ));
+$GLOBALS['database'] = $app['db'];
 
 $app->get('/', function () use ($app) {
     return $app['twig']->render('create.twig', array(
@@ -36,10 +37,23 @@ $app->post('/create', function (Request $request) use ($app) {
 	// Remove the last element of the options array as it will always be blank.
 	array_pop($options);
 
-	$poll = new Poll($question, $options, $app['db']);
+	$poll = new Poll($question, $options);
     $poll->create();
 
-	return $app->redirect('/');
+	return $app->redirect('/' . $poll->getQuestion()->geturlComponent());
+});
+
+$app->get('{urlComponent}', function($urlComponent) use ($app) {
+    $poll = Poll::getPollFromUrlComponent($urlComponent);
+    $question = $poll->getQuestion()->getQuestion();
+    foreach ($poll->getOptions() as $option) {
+        $options[] = $option->getOption();
+    }
+
+    return $app['twig']->render('poll.twig', array(
+        'question' => $question,
+        'options' => $options,
+    ));
 });
 
 $app->run();

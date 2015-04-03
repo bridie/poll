@@ -9,13 +9,21 @@ class Poll
 {
 	private $question;
 	private $options;
-	private $database;
 
-	public function __construct($question, $options, $database)
+	public function __construct($question, $options)
 	{
-		$this->database = $database;
-		$this->question = new Question($question, $database);
-		$this->options = array_map(array($this, 'setOptions'), $options);
+		$this->question = ($question instanceof Question) ? $question : new Question($question);
+		$this->options = ($options[0] instanceof Option) ? $options : array_map(array($this, 'setOptions'), $options);
+	}
+
+	public function getQuestion()
+	{
+		return $this->question;
+	}
+
+	public function getOptions()
+	{
+		return $this->options;
 	}
 
 	public function create()
@@ -29,6 +37,14 @@ class Poll
 
 	private function setOptions($option)
 	{
-		return new Option($option, $this->database);
+		return new Option($option);
+	}
+
+	public static function getPollFromUrlComponent($urlComponent)
+	{
+		$question = Question::getQuestionFromUrlComponent($urlComponent);
+		$options = Option::getOptionsFromQuestionId($question->getId());
+		$poll = new Static($question, $options);
+		return $poll;
 	}
 }

@@ -9,8 +9,9 @@ class Option
 	private $option;
 	private $database;
 
-	public function __construct($option, $database)
+	public function __construct($option)
 	{
+		global $database;
 		$this->database = $database;
 		$this->option = $option;
 	}
@@ -45,5 +46,22 @@ class Option
 		}
 
 		return $insert;
+	}
+
+	public static function getOptionsFromQuestionId($questionId)
+	{
+		global $database;
+		$sql = 'SELECT * FROM options WHERE question_id = ?';
+		$optionData = $database->fetchAll($sql, array($questionId));
+		$options = array_map(array(self, 'getOptionObjects'), $optionData);
+		return $options;
+	}
+
+	private static function getOptionObjects($optionData)
+	{
+		$option = new Static($optionData['option_value']);
+		$option->id = $optionData['id'];
+		$option->questionId = $optionData['question_id'];
+		return $option;
 	}
 }
