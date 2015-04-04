@@ -47,7 +47,7 @@ $app->get('{urlComponent}', function($urlComponent) use ($app) {
     $poll = Poll::getPollFromUrlComponent($urlComponent);
     $question = $poll->getQuestion()->getQuestion();
     foreach ($poll->getOptions() as $option) {
-        $options[] = $option->getOption();
+        $options[$option->getId()] = $option->getOption();
     }
 
     return $app['twig']->render('poll.twig', array(

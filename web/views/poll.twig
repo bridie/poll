@@ -1,0 +1,18 @@
+{% extends "base.twig" %}
+
+{% block title %}Create a poll{% endblock %}
+
+{% block body %}
+
+<div id="poll-page">
+	<h1>{{ question }}</h2>
+
+	<form>
+		{% for optionId,option in options %}
+			<input name="option" id="{{ optionId }}" type="radio" />
+			<label for="{{optionId}}" >{{ option }}</label>
+		{% endfor %}
+	</form>
+</div>
+
+{% endblock %}

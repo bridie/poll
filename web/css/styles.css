@@ -2,11 +2,11 @@ body {
   font-family: 'Mallanna', sans-serif;
   margin: 0px;
   background: #F9F9F9; }
+  body h1 {
+    font-size: 40px;
+    color: #555555;
+    text-align: center; }
 
-#create-poll-page h1 {
-  font-size: 40px;
-  color: #555555;
-  text-align: center; }
 #create-poll-page form {
   text-align: center; }
   #create-poll-page form input {
@@ -40,5 +40,40 @@ body {
     padding: 5px 15px;
     margin-top: 35px;
     cursor: pointer; }
+
+#poll-page {
+  text-align: center; }
+  #poll-page form {
+    display: inline-block; }
+    #poll-page form input[type=radio] {
+      display: none; }
+    #poll-page form label {
+      text-align: left;
+      color: #7B7B7B;
+      position: relative;
+      display: block;
+      cursor: pointer;
+      padding-left: 40px;
+      margin-right: 15px;
+      font-size: 25px; }
+    #poll-page form label:before {
+      text-align: center;
+      content: "";
+      display: inline-block;
+      border-radius: 14px;
+      width: 20px;
+      height: 20px;
+      margin-right: 10px;
+      position: absolute;
+      left: 0;
+      bottom: 10px;
+      border: 3px solid #E45857; }
+    #poll-page form input[type=radio]:checked + label:before {
+      border: 3px solid #1D9A4F;
+      content: "\25CF";
+      color: #1D9A4F;
+      font-size: 31px;
+      line-height: 0.6;
+      text-align: center; }
 
 /*# sourceMappingURL=styles.css.map */
