@@ -5,14 +5,26 @@ define([
   'models/vote'
 ], function($, _, Backbone, Vote){
   var PollView = Backbone.View.extend({
+		initialize: function() {
+			this.model = null;
+		},
+
 		events: {
 			'change input': 'vote'
 		},
 
 		vote: function(e) {
-			var vote = new Vote();
-			vote.save({ optionId: $(e.currentTarget).attr('id') });
+			var self = this;
+			var optionId = $(e.currentTarget).attr('id');
+
+			if (this.model) {
+				this.model.destroy();
+			}
+
+			this.model = new Vote();
+			this.model.save({ optionId:  optionId });
 		}
+
 	});
 
 	return PollView;

@@ -15,6 +15,16 @@ class Vote
 		$this->optionId = $optionId;
 	}
 
+	public function setId($id)
+	{
+		$this->id = $id;
+	}
+
+	public function setOptionId($optionId)
+	{
+		$this->optionId = $optionId;
+	}
+
 	public function getId()
 	{
 		return $this->id;
@@ -36,5 +46,24 @@ class Vote
 		}
 
 		return $insert;
+	}
+
+	public function delete()
+	{
+		$deleteSql = 'DELETE FROM votes WHERE id = ?';
+		$delete = $this->database->executeUpdate($deleteSql, array($this->id));
+		return $delete;
+	}
+
+	public static function getVoteFromId($id)
+	{
+		global $database;
+		$selectSql = 'SELECT * FROM votes where id = ?';
+		$stmt = $database->executeQuery($selectSql, array($id));
+		$result = $stmt->fetch();
+
+		$vote = new Static($result['option_id']);
+		$vote->setId($result['id']);
+		return $vote;
 	}
 }
