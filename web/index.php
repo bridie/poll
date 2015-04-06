@@ -6,6 +6,7 @@ $loader->add('App', '..');
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Poll;
+use App\Vote;
 
 $app = new Silex\Application();
 $app['debug'] = true;
@@ -26,12 +27,12 @@ $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
 ));
 $GLOBALS['database'] = $app['db'];
 
-$app->get('/', function () use ($app) {
+$app->get('/', function() use ($app) {
     return $app['twig']->render('create.twig', array(
     ));
 });
 
-$app->post('/create', function (Request $request) use ($app) {
+$app->post('/create', function(Request $request) use ($app) {
 	$question = $request->get('question');
 	$options = $request->get('options');
 	// Remove the last element of the options array as it will always be blank.
@@ -54,6 +55,22 @@ $app->get('{urlComponent}', function($urlComponent) use ($app) {
         'question' => $question,
         'options' => $options,
     ));
+});
+
+$app->post('/votes', function(Request $request) use ($app) {
+    $data = json_decode($request->getContent(), true);
+    $optionId = $data['optionId'];
+    $vote = new Vote($optionId);
+    $vote = $vote->create();
+
+    if ($vote) {
+        die(json_encode(array(
+            'id' => $vote->getId(),
+            'optionId' => $vote->getOptionId()
+        )));
+    } else {
+        die(json_encode(array()));
+    }
 });
 
 $app->run();
