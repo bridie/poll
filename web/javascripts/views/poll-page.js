@@ -2,11 +2,21 @@ define([
   'jquery',
   'underscore',
   'backbone',
+  'jqueryCookie',
   'models/vote'
-], function($, _, Backbone, Vote){
+], function($, _, Backbone, jqueryCookie, Vote){
   var PollView = Backbone.View.extend({
 		initialize: function() {
-			this.model = null;
+			if ($.cookie('vote-id')) {
+				this.model = new Vote({ id: $.cookie('vote-id')});
+				this.model.fetch({
+					success: function(model, response) {
+						$('#' + model.get('optionId')).prop('checked', true);
+					}
+				})
+			} else {
+				this.model = null;
+			}
 		},
 
 		events: {
@@ -22,7 +32,11 @@ define([
 			}
 
 			this.model = new Vote();
-			this.model.save({ optionId:  optionId });
+			this.model.save({ optionId: optionId }, {
+				success: function() {
+					$.cookie('vote-id', self.model.get('id'));
+				}
+			});
 		}
 
 	});

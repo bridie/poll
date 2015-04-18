@@ -2,7 +2,8 @@ require.config({
   paths: {
     jquery: 'vendor/jquery',
     underscore: 'vendor/underscore',
-    backbone: 'vendor/backbone'
+    backbone: 'vendor/backbone',
+    jqueryCookie: 'vendor/jquery.cookie'
   }
 });
 

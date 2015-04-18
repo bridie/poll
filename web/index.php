@@ -73,6 +73,19 @@ $app->post('/votes', function(Request $request) use ($app) {
     }
 });
 
+$app->get('/votes/{id}', function($id) use ($app) {
+    $vote = Vote::getVoteFromId($id);
+
+    if ($vote) {
+        die(json_encode(array(
+            'id' => $vote->getId(),
+            'optionId' => $vote->getOptionId()
+        )));
+    } else {
+        die(json_encode(array()));
+    }
+});
+
 $app->delete('/votes/{id}', function($id) use ($app) {
     $vote = Vote::getVoteFromId($id);
     $vote->delete();
