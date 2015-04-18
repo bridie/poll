@@ -55,7 +55,12 @@ $app->get('{urlComponent}', function($urlComponent) use ($app) {
     return $app['twig']->render('poll.twig', array(
         'question' => $question,
         'options' => $options,
+        'urlComponent' => $urlComponent,
     ));
+});
+
+$app->get('{urlComponent}/results', function($urlComponent) use ($app) {
+    return '<p>hello world</p>';
 });
 
 $app->post('/votes', function(Request $request) use ($app) {

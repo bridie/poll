@@ -75,5 +75,11 @@ body {
       font-size: 31px;
       line-height: 0.6;
       text-align: center; }
+  #poll-page a {
+    display: block;
+    text-decoration: none;
+    color: #E45857;
+    font-size: 18px;
+    margin-top: 15px; }
 
 /*# sourceMappingURL=styles.css.map */
