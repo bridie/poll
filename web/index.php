@@ -16,13 +16,14 @@ $app->register(new Silex\Provider\TwigServiceProvider(), array(
     'twig.path' => __DIR__.'/views',
 ));
 
+$database = parse_ini_file('../app/config/database.ini');
 $app->register(new Silex\Provider\DoctrineServiceProvider(), array(
     'db.options' => array(
         'driver' => 'pdo_mysql',
-        'dbname' => 'poll',
-        'user' => 'root',
-        'host' => '127.0.0.1',
-        'password' => ''
+        'dbname' => $database['dbname'],
+        'user' => $database['user'],
+        'host' => $database['host'],
+        'password' => $database['password']
     ),
 ));
 $GLOBALS['database'] = $app['db'];
