@@ -1,0 +1,32 @@
+#results-page {
+	text-align: center;
+	height: auto;
+	min-height: 100%;
+	#results-left-col {
+		float: left;
+		width: 30%;
+		background: darken($background-color, 5%);
+		height: 100vh;
+		.option {
+			color: $light-grey-font-color;
+			margin: 20px 0px;
+			.option-count {
+				display: inline-block;
+				border: 1px solid black;
+				border-radius: 50%;
+				height: 24px;
+				width: 24px;
+				line-height: 24px;
+				padding: 5px;
+				font-size: 24px;
+			}
+			.option-label {
+				font-size: 20px;
+			}
+		}
+	}
+	#results-right-col {
+		float: right;
+		width: 70%;
+	}
+}

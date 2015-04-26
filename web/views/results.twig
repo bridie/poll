@@ -1,0 +1,28 @@
+{% extends "base.twig" %}
+
+{% block title %}Results{% endblock %}
+
+{% block body %}
+
+<div id="results-page">
+	<div id="results-left-col">
+		<h2>Votes</h2>
+
+		{% for optionId,option in options %}
+			<div class="option">
+				<div class="option-count">
+					{{ option.option_count }}
+				</div>
+				<span class="option-label">
+					{{ option.option_value }}
+				</span>
+			</div>
+		{% endfor %}
+	</div>
+
+	<div id="results-right-col">
+		<h2>{{ question }}</h2>
+	</div>
+</div>
+
+{% endblock %}

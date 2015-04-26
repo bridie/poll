@@ -1,9 +1,16 @@
+body, html {
+  height: 100%; }
+
 body {
   font-family: 'Mallanna', sans-serif;
   margin: 0px;
   background: #F9F9F9; }
   body h1 {
     font-size: 40px;
+    color: #555555;
+    text-align: center; }
+  body h2 {
+    font-size: 30px;
     color: #555555;
     text-align: center; }
 
@@ -81,5 +88,32 @@ body {
     color: #E45857;
     font-size: 18px;
     margin-top: 15px; }
+
+#results-page {
+  text-align: center;
+  height: auto;
+  min-height: 100%; }
+  #results-page #results-left-col {
+    float: left;
+    width: 30%;
+    background: #ececec;
+    height: 100vh; }
+    #results-page #results-left-col .option {
+      color: #7B7B7B;
+      margin: 20px 0px; }
+      #results-page #results-left-col .option .option-count {
+        display: inline-block;
+        border: 1px solid black;
+        border-radius: 50%;
+        height: 24px;
+        width: 24px;
+        line-height: 24px;
+        padding: 5px;
+        font-size: 24px; }
+      #results-page #results-left-col .option .option-label {
+        font-size: 20px; }
+  #results-page #results-right-col {
+    float: right;
+    width: 70%; }
 
 /*# sourceMappingURL=styles.css.map */

@@ -60,7 +60,19 @@ $app->get('{urlComponent}', function($urlComponent) use ($app) {
 });
 
 $app->get('{urlComponent}/results', function($urlComponent) use ($app) {
-    return '<p>hello world</p>';
+    $poll = Poll::getPollFromUrlComponent($urlComponent);
+    $question = $poll->getQuestion()->getQuestion();
+    foreach ($poll->getOptions() as $option) {
+        $options[$option->getId()] = array(
+            'option_value' => $option->getOption(),
+            'option_count' => Vote::countVotes($option->getId())['total'],
+        );
+    }
+
+    return $app['twig']->render('results.twig', array(
+        'question' => $question,
+        'options' => $options,
+    ));
 });
 
 $app->post('/votes', function(Request $request) use ($app) {

@@ -66,4 +66,13 @@ class Vote
 		$vote->setId($result['id']);
 		return $vote;
 	}
+
+	public static function countVotes($optionId)
+	{
+		global $database;
+		$selectSql = 'SELECT count(*) as total FROM votes where option_id = ?';
+		$stmt = $database->executeQuery($selectSql, array($optionId));
+		$result = $stmt->fetch();
+		return $result;
+	}
 }
