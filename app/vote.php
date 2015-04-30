@@ -67,6 +67,20 @@ class Vote
 		return $vote;
 	}
 
+	public static function getVotesFromOptionId($optionId)
+	{
+		global $database;
+		$votes = array();
+		$selectSql = 'SELECT * FROM votes WHERE option_id = ?';
+		$stmt = $database->executeQuery($selectSql, array($optionId));
+		while ($result = $stmt->fetch()) {
+			$vote = new Static($result['option_id']);
+			$vote->setId($result['id']);
+			$votes[] = $vote;
+		}
+		return $votes;
+	}
+
 	public static function countVotes($optionId)
 	{
 		global $database;

@@ -3,12 +3,14 @@ define([
   'underscore',
   'backbone',
   'views/create-page',
-  'views/poll-page'
-], function($, _, Backbone, CreatePage, PollPage){
+  'views/poll-page',
+  'views/results-page'
+], function($, _, Backbone, CreatePage, PollPage, ResultsPage){
   var AppRouter = Backbone.Router.extend({
     routes: {
       '': 'createPage',
-      ':urlComponent' : 'pollPage'
+      ':urlComponent' : 'pollPage',
+      ':urlComponent/results': 'resultsPage'
     },
 
     createPage: function() {
@@ -16,8 +18,12 @@ define([
     },
 
     pollPage: function(urlComponent) {
-      var pollPage = new PollPage({ el: '#poll-page '})
+      var pollPage = new PollPage({ el: '#poll-page' });
     },
+
+    resultsPage: function(urlComponent) {
+      var resultsPage = new ResultsPage({ el: '#results-page', urlComponent: urlComponent });
+    }
 
   });
 

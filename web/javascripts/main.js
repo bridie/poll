@@ -3,8 +3,9 @@ require.config({
     jquery: 'vendor/jquery',
     underscore: 'vendor/underscore',
     backbone: 'vendor/backbone',
-    jqueryCookie: 'vendor/jquery.cookie'
-  }
+    jqueryCookie: 'vendor/jquery.cookie',
+    chart: 'vendor/chart'
+	}
 });
 
 require([

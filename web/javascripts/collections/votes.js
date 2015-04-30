@@ -1,10 +1,11 @@
 define([
   'jquery',
   'underscore',
-  'backbone'
-], function($, _, Backbone){
+  'backbone',
+  'models/vote'
+], function($, _, Backbone, Vote){
   var Votes = Backbone.Collection.extend({
-  	url: '/votes'
+	url: '/votes',
   	model: Vote
   });
 

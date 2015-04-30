@@ -6,7 +6,9 @@ $loader->add('App', '..');
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use App\Poll;
+use App\Question;
 use App\Vote;
+use App\Option;
 
 $app = new Silex\Application();
 $app['debug'] = true;
@@ -45,34 +47,21 @@ $app->post('/create', function(Request $request) use ($app) {
 	return $app->redirect('/' . $poll->getQuestion()->geturlComponent());
 });
 
-$app->get('{urlComponent}', function($urlComponent) use ($app) {
-    $poll = Poll::getPollFromUrlComponent($urlComponent);
-    $question = $poll->getQuestion()->getQuestion();
-    foreach ($poll->getOptions() as $option) {
-        $options[$option->getId()] = $option->getOption();
+$app->get('/votes', function(Request $request) use ($app) {
+    $urlComponent = $_GET['urlComponent'];
+    $question = Question::getQuestionFromUrlComponent($urlComponent);
+    $options = Option::getOptionsFromQuestionId($question->getId());
+    $votes = array();
+    foreach ($options as $option) {
+        $optionVotes = Vote::getVotesFromOptionId($option->getId());
+        foreach ($optionVotes as $optionVote) {
+            $votes[] = array(
+                'id' => $optionVote->getId(),
+                'option_id' => $optionVote->getOptionId(),
+            );
+        }
     }
-
-    return $app['twig']->render('poll.twig', array(
-        'question' => $question,
-        'options' => $options,
-        'urlComponent' => $urlComponent,
-    ));
-});
-
-$app->get('{urlComponent}/results', function($urlComponent) use ($app) {
-    $poll = Poll::getPollFromUrlComponent($urlComponent);
-    $question = $poll->getQuestion()->getQuestion();
-    foreach ($poll->getOptions() as $option) {
-        $options[$option->getId()] = array(
-            'option_value' => $option->getOption(),
-            'option_count' => Vote::countVotes($option->getId())['total'],
-        );
-    }
-
-    return $app['twig']->render('results.twig', array(
-        'question' => $question,
-        'options' => $options,
-    ));
+    die(json_encode($votes));
 });
 
 $app->post('/votes', function(Request $request) use ($app) {
@@ -108,6 +97,36 @@ $app->delete('/votes/{id}', function($id) use ($app) {
     $vote = Vote::getVoteFromId($id);
     $vote->delete();
     die(json_encode(array()));
+});
+
+$app->get('{urlComponent}', function($urlComponent) use ($app) {
+    $poll = Poll::getPollFromUrlComponent($urlComponent);
+    $question = $poll->getQuestion()->getQuestion();
+    foreach ($poll->getOptions() as $option) {
+        $options[$option->getId()] = $option->getOption();
+    }
+
+    return $app['twig']->render('poll.twig', array(
+        'question' => $question,
+        'options' => $options,
+        'urlComponent' => $urlComponent,
+    ));
+});
+
+$app->get('{urlComponent}/results', function($urlComponent) use ($app) {
+    $poll = Poll::getPollFromUrlComponent($urlComponent);
+    $question = $poll->getQuestion()->getQuestion();
+    foreach ($poll->getOptions() as $option) {
+        $options[$option->getId()] = array(
+            'option_value' => $option->getOption(),
+            'option_count' => Vote::countVotes($option->getId())['total'],
+        );
+    }
+
+    return $app['twig']->render('results.twig', array(
+        'question' => $question,
+        'options' => $options,
+    ));
 });
 
 $app->run();
